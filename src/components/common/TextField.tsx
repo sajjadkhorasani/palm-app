@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 import { Label, TextInput } from 'flowbite-react';
 import { Control, Controller, FieldValues, Path, RegisterOptions } from 'react-hook-form';

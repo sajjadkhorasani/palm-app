@@ -41,7 +41,7 @@ export const SignUpForm = () => {
 				placeholder="Enter Your Password"
 			/>
 			<Button type="submit" className="mt-8 mx-2" color="light">
-				Sign In
+				Sign Up
 			</Button>
 		</form>
 	);

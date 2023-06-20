@@ -10,7 +10,7 @@ export async function POST(request: Request) {
 			data: { isAdmin: email.includes('admin'), password: await hashPassword(password), email, ...data },
 		});
 
-		const token = generateJWT(user);
+		const token = await generateJWT(user);
 		const res = new NextResponse();
 		res.cookies.set(process.env.COOKIE_NAME as string, token, {
 			httpOnly: true,
