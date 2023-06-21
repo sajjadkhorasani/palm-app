@@ -14,4 +14,10 @@ if (process.env.NODE_ENV === 'production') {
 	prisma = global.cachedPrisma;
 }
 
+// prisma.$use(async (params, next) => {
+// 	if (params.model === 'Product') {
+
+// 	}
+// })
+
 export const db = prisma;

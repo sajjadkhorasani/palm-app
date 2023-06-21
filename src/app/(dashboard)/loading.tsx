@@ -1,13 +1,13 @@
 'use client';
 
-import { Spinner } from 'flowbite-react';
+import { Spinner } from "@material-tailwind/react";
 
 export default function DashboardLoading() {
 	return (
 		<div>
 			<h2>
 				Dashboard Loading
-				<Spinner className="w-10 h-10" />
+				<Spinner className="h-10 w-10" />
 			</h2>
 		</div>
 	);

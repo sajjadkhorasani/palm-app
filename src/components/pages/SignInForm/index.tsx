@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from 'flowbite-react';
+import { Button } from '@material-tailwind/react';
 import { useRouter } from 'next/navigation';
 
 import API from '@@services';
@@ -30,9 +30,9 @@ export const SignInForm = () => {
 			className="relative flex flex-col justify-start items-stretch gap-6"
 			onSubmit={handleSubmit(onSubmitHandler, onInValid)}
 		>
-			<EmailField name="email" control={control} label="Email" placeholder="Enter Account Email" />
-			<PasswordField name="password" control={control} label="Password" placeholder="Enter Account Password" />
-			<Button type="submit" className="mt-8 mx-2" color="light">
+			<EmailField name="email" control={control} placeholder="Email" />
+			<PasswordField name="password" control={control} placeholder="Password" />
+			<Button type="submit" variant="outlined" color="gray">
 				Sign In
 			</Button>
 		</form>

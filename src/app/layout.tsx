@@ -1,18 +1,17 @@
+'use client';
+
 import './globals.css';
 import { Inter } from 'next/font/google';
-import { Metadata } from 'next';
+import { ThemeProvider } from '@material-tailwind/react';
 
 const inter = Inter({ subsets: ['latin'] });
-
-export const metadata: Metadata = {
-	title: 'Fullstack App',
-	description: 'Author: SaJJaD Khorasani - Authentication module',
-};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>{children}</body>
+			<body className={inter.className}>
+				<ThemeProvider>{children}</ThemeProvider>
+			</body>
 		</html>
 	);
 }
