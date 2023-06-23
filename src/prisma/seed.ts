@@ -1,4 +1,6 @@
-import { db } from '@@lib';
+import { randomUUID } from 'crypto';
+import { getRandomNumber } from '@@utils';
+import { db, hashPassword } from '@@lib';
 
 async function main() {
 	db.$use(async (params, next) => {
@@ -19,6 +21,32 @@ async function main() {
 		}
 		return next(params);
 	});
+
+	const currentId = randomUUID();
+	const user = await db.user.upsert({
+		where: { email: 'admin@mail.com' },
+		update: {},
+		create: {
+			id: currentId,
+			firstName: 'Admin',
+			lastName: 'Admin LastName',
+			email: 'admin@mail.com',
+			password: await hashPassword('12345678'),
+			isAdmin: true,
+			products: {
+				create: new Array(5).fill(1).map((_, index) => ({
+					name: `Product ${index + 1}`,
+					image: `https://picsum.photos/id/${index + 100}/300.webp`,
+					price: getRandomNumber(100, 700),
+				})),
+			},
+		},
+		include: {
+			products: true,
+		},
+	});
+
+	console.log({ user });
 }
 
 main()

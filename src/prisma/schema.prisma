@@ -10,18 +10,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum GENDER_TYPE {
+  MALE
+  FEMALE
+  OTHER
+}
+
 model User {
-  id        String   @id @default(uuid())
+  id        String      @id @default(uuid())
   firstName String
   lastName  String
-  email     String   @unique
+  email     String      @unique
   password  String
-  isAdmin   Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  gender    GENDER_TYPE @default(OTHER)
+  avatar    String?
+  isAdmin   Boolean     @default(false)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 
-  baskets Basket[]
-  Product Product[]
+  baskets  Basket[]
+  products Product[]
 }
 
 model Basket {
@@ -50,9 +58,9 @@ model Product {
   author   User   @relation(fields: [authorId], references: [id])
   authorId String
 
-  Basket   Basket? @relation(fields: [basketId], references: [id])
+  basket   Basket? @relation(fields: [basketId], references: [id])
   basketId String?
 
-  @@unique([authorId])
+  @@unique([id])
   @@index([authorId, basketId])
 }

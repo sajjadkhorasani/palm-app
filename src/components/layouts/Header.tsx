@@ -3,7 +3,7 @@
 import React from 'react';
 import {
 	Navbar,
-	MobileNav,
+	Collapse,
 	Typography,
 	Button,
 	Menu,
@@ -143,7 +143,7 @@ export function MainHeader() {
 	}, []);
 
 	return (
-		<Navbar className="mx-auto p-2 lg:rounded-full lg:pl-6">
+		<Navbar className="mx-auto p-2 my-4 lg:rounded-full lg:pl-6">
 			<div className="relative mx-auto flex items-center text-blue-gray-900">
 				<Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium">Palm App</Typography>
 				<div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
@@ -160,9 +160,9 @@ export function MainHeader() {
 				</IconButton>
 				<ProfileMenu />
 			</div>
-			<MobileNav open={isNavOpen} className="overflow-scroll">
+			<Collapse open={isNavOpen} className="overflow-scroll">
 				<NavList />
-			</MobileNav>
+			</Collapse>
 		</Navbar>
 	);
 }
