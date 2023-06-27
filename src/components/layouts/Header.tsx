@@ -23,7 +23,11 @@ import {
 	LifebuoyIcon,
 	PowerIcon,
 	Bars2Icon,
+	CircleStackIcon,
 } from '@heroicons/react/24/outline';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import clsx from 'clsx';
 
 const profileMenuItems = [
 	{
@@ -107,28 +111,40 @@ function ProfileMenu() {
 // nav list component
 const navListItems = [
 	{
-		label: 'Home',
-		icon: UserCircleIcon,
+		label: 'Products',
+		icon: CircleStackIcon,
+		href: '/home',
 	},
 	{
 		label: 'Blocks',
 		icon: CubeTransparentIcon,
+		href: '/profile',
 	},
 	{
 		label: 'Docs',
 		icon: CodeBracketSquareIcon,
+		href: '/shop',
 	},
 ];
 
 function NavList() {
+	const pathname = usePathname();
+
+	const isActive = (route: string) => pathname === route;
+
 	return (
 		<ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
-			{navListItems.map(({ label, icon }, key) => (
-				<Typography key={label} as="a" href="#" variant="small" color="blue-gray" className="font-normal">
-					<MenuItem className="flex items-center gap-2 lg:rounded-full">
-						{React.createElement(icon, { className: 'h-[18px] w-[18px]' })} {label}
-					</MenuItem>
-				</Typography>
+			{navListItems.map(({ label, icon, href }, key) => (
+				<Link key={key} href={href}>
+					<Typography className={clsx('font-normal', { 'text-blue-500': isActive(href) })} variant="small">
+						<MenuItem className="flex items-center gap-2 lg:rounded-full">
+							{React.createElement(icon, {
+								className: clsx('h-[18px] w-[18px]', { 'text-blue-500': isActive(href) }),
+							})}{' '}
+							{label}
+						</MenuItem>
+					</Typography>
+				</Link>
 			))}
 		</ul>
 	);
@@ -143,7 +159,7 @@ export function MainHeader() {
 	}, []);
 
 	return (
-		<Navbar className="mx-auto p-2 my-4 lg:rounded-full lg:pl-6">
+		<Navbar className="mx-auto sticky top-2 p-2 my-4 z-10 lg:rounded-full lg:pl-6">
 			<div className="relative mx-auto flex items-center text-blue-gray-900">
 				<Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium">Palm App</Typography>
 				<div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">

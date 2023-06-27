@@ -47,13 +47,14 @@ model Basket {
 }
 
 model Product {
-  id        String   @id @default(uuid())
-  name      String
-  price     Float
-  image     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  deleted   Boolean  @default(false)
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  price       Float
+  image       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deleted     Boolean  @default(false)
 
   author   User   @relation(fields: [authorId], references: [id])
   authorId String

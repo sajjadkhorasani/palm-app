@@ -1,8 +1,7 @@
 import bcrypt from 'bcrypt';
 import { Prisma } from '@prisma/client';
 import { SignJWT, jwtVerify } from 'jose';
-
-import { RequestCookies } from 'next/dist/compiled/@edge-runtime/cookies';
+import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 
 import { db } from './db';
 
@@ -34,10 +33,11 @@ export const verifyJWT = async (token: string) => {
 	return payload.payload as any;
 };
 
-export const getUserFromCookie = async (cookies: RequestCookies) => {
+export const getUserFromCookie = async (cookies: ReadonlyRequestCookies) => {
 	const jwt = cookies.get(process.env.COOKIE_NAME as string);
 
 	if (!jwt) {
+		cookies.delete(process.env.COOKIE_NAME as string);
 		return null;
 	}
 
@@ -52,6 +52,7 @@ export const getUserFromCookie = async (cookies: RequestCookies) => {
 
 		return user;
 	} catch (err) {
+		cookies.delete(process.env.COOKIE_NAME as string);
 		console.error(err);
 	}
 };

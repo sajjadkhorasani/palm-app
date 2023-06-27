@@ -34,9 +34,11 @@ async function main() {
 			password: await hashPassword('12345678'),
 			isAdmin: true,
 			products: {
-				create: new Array(5).fill(1).map((_, index) => ({
+				create: new Array(6).fill(1).map((_, index) => ({
 					name: `Product ${index + 1}`,
-					image: `https://picsum.photos/id/${index + 100}/300.webp`,
+					description:
+						"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+					image: `https://picsum.photos/id/${index + 15}/400.webp`,
 					price: getRandomNumber(100, 700),
 				})),
 			},
