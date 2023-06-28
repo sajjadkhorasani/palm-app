@@ -9,7 +9,7 @@ import { EmailField, PasswordField, TextField } from '@@components';
 
 import { ISignUpForm, SignUpFormDefaultValue, SignUpFormSchema } from './index.schema';
 
-export const SignUpForm = () => {
+export function SignUpForm() {
 	const router = useRouter();
 	const { control, handleSubmit } = useForm<ISignUpForm>(SignUpFormSchema, SignUpFormDefaultValue);
 
@@ -33,11 +33,11 @@ export const SignUpForm = () => {
 			<TextField name="firstName" control={control} placeholder="First Name" />
 			<TextField name="lastName" control={control} placeholder="Last Name" />
 			<EmailField name="email" control={control} placeholder="Email" />
-			<PasswordField name="password" control={control} placeholder="Password" />
+			<PasswordField preview name="password" control={control} placeholder="Password" />
 			<PasswordField name="repeatPassword" control={control} placeholder="Repeat Password" />
 			<Button type="submit" variant="outlined" color="gray">
 				Sign Up
 			</Button>
 		</form>
 	);
-};
+}

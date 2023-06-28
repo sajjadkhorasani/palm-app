@@ -15,7 +15,7 @@ interface IProfileCardProps {
 	user: Prisma.UserGetPayload<true>;
 }
 
-export const ProfileCard = ({ user }: IProfileCardProps) => {
+export function ProfileCard({ user }: IProfileCardProps) {
 	const router = useRouter();
 	const { control, handleSubmit } = useForm<IProfileForm>(ProfileFormSchema, ProfileFormDefaultValue(user));
 
@@ -34,7 +34,6 @@ export const ProfileCard = ({ user }: IProfileCardProps) => {
 	return (
 		<Card className="w-full max-w-[24rem]">
 			<CardHeader
-				color="blue"
 				floated={false}
 				shadow={false}
 				className="m-0 grid place-items-center rounded-b-none py-8 px-4 text-center"
@@ -63,6 +62,4 @@ export const ProfileCard = ({ user }: IProfileCardProps) => {
 			</CardBody>
 		</Card>
 	);
-};
-
-export * from './index.schema';
+}

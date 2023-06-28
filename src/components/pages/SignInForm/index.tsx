@@ -9,7 +9,7 @@ import { EmailField, PasswordField } from '@@components';
 
 import { ISignInForm, SignInFormDefaultValue, SignInFormSchema } from './index.schema';
 
-export const SignInForm = () => {
+export function SignInForm() {
 	const router = useRouter();
 	const { control, handleSubmit } = useForm<ISignInForm>(SignInFormSchema, SignInFormDefaultValue);
 

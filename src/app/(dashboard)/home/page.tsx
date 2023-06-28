@@ -13,7 +13,7 @@ const getData = async () => {
 	return new Promise<{ products: Prisma.ProductGetPayload<true>[]; user: Prisma.UserGetPayload<true> }>((resolve) => {
 		setTimeout(async () => {
 			return resolve({ user: user as any, products: await db.product.findMany({ where }) });
-		}, 5000);
+		}, 200);
 	});
 };
 

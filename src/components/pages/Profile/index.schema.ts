@@ -13,7 +13,7 @@ export const ProfileFormDefaultValue = (user: Prisma.UserGetPayload<true>) => ({
 	firstName: user.firstName || '',
 	lastName: user.lastName || '',
     email: user.email,
-	password: user.password || '',
+	password: '',
 	repeatPassword: '',
 });
 

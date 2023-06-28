@@ -1,9 +1,8 @@
 'use client';
 
 import clsx from 'clsx';
-import { useCallback, useState } from 'react';
-import { Button, Input, Typography } from '@material-tailwind/react';
-import { EyeIcon, EyeSlashIcon, InformationCircleIcon } from '@heroicons/react/24/solid';
+import { Input, Typography } from '@material-tailwind/react';
+import { InformationCircleIcon } from '@heroicons/react/24/solid';
 import { Control, Controller, FieldValues, Path, RegisterOptions } from 'react-hook-form';
 
 interface IPasswordFieldProps<T extends FieldValues> {
