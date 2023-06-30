@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 import { getRandomNumber } from '@@utils';
-import { db, hashPassword } from '@@lib';
+import db, { hashPassword } from '@@lib';
 
 async function main() {
 	db.$use(async (params, next) => {

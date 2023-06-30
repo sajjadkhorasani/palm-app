@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { Input, Typography } from '@material-tailwind/react';
+import { Input, InputProps, Typography } from '@material-tailwind/react';
 import { InformationCircleIcon } from '@heroicons/react/24/solid';
 import { Control, Controller, FieldValues, Path, RegisterOptions } from 'react-hook-form';
 
@@ -11,6 +11,7 @@ interface IEmailFieldProps<T extends FieldValues> {
 	control: Control<T>;
 	label?: string;
 	rules?: RegisterOptions;
+	inputProps?: InputProps;
 	placeholder?: string;
 	[x: string]: any;
 }
@@ -44,7 +45,7 @@ export const EmailField = <T extends FieldValues = any>({
 							label={placeholder}
 							error={Boolean(fieldState.error)}
 							{...field}
-							{...inputProps}
+							{...(inputProps as any)}
 						/>
 						{fieldState.error ? (
 							<Typography

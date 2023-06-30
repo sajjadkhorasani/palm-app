@@ -1,10 +1,10 @@
-import { cookies } from 'next/headers';
+import { headers } from 'next/headers';
 
 import { ProfileCard } from '@@components';
-import { getUserFromCookie } from '@@lib';
+import { getUserFromHeaders } from '@@lib';
 
 const getData = async () => {
-	const user = getUserFromCookie(cookies());
+	const user = getUserFromHeaders(headers());
 
 	return user;
 };

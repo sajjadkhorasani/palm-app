@@ -33,11 +33,15 @@ export const verifyJWT = async (token: string) => {
 	return payload.payload as any;
 };
 
+export const getUserFromHeaders = (headers: Headers) => {
+	const header = headers.get('user');
+	return JSON.parse(header!);
+};
+
 export const getUserFromCookie = async (cookies: ReadonlyRequestCookies) => {
 	const jwt = cookies.get(process.env.COOKIE_NAME as string);
 
 	if (!jwt) {
-		cookies.delete(process.env.COOKIE_NAME as string);
 		return null;
 	}
 
@@ -52,7 +56,6 @@ export const getUserFromCookie = async (cookies: ReadonlyRequestCookies) => {
 
 		return user;
 	} catch (err) {
-		cookies.delete(process.env.COOKIE_NAME as string);
 		console.error(err);
 	}
 };

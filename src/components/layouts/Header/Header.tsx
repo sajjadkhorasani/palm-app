@@ -13,7 +13,7 @@ const navListItems = [
 	{
 		label: 'Products',
 		icon: CircleStackIcon,
-		href: '/home',
+		href: '/',
 	},
 	{
 		label: 'Profile',
@@ -35,7 +35,7 @@ function NavList() {
 						<MenuItem className="flex items-center gap-2 lg:rounded-full">
 							{createElement(icon, {
 								className: clsx('h-[18px] w-[18px]', { 'text-blue-500': isActive(href) }),
-							})}{' '}
+							})}
 							{label}
 						</MenuItem>
 					</Typography>
@@ -60,15 +60,17 @@ export function MainHeader() {
 				<div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
 					<NavList />
 				</div>
-				<IconButton
-					size="sm"
-					color="blue-gray"
-					variant="text"
-					onClick={toggleIsNavOpen}
-					className="ml-auto mr-2 lg:hidden"
-				>
-					<Bars2Icon className="h-6 w-6" />
-				</IconButton>
+				<div className="flex flex-row justify-start items-center">
+					<IconButton
+						size="sm"
+						color="blue-gray"
+						variant="text"
+						onClick={toggleIsNavOpen}
+						className="ml-auto mr-2 lg:hidden"
+					>
+						<Bars2Icon className="h-6 w-6" />
+					</IconButton>
+				</div>
 				<HamburgerMenu />
 			</div>
 			<Collapse open={isNavOpen} className="overflow-scroll">

@@ -1,13 +1,12 @@
 'use client';
 
-import Image from 'next/image';
 import { Prisma } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import { Button, Card, CardBody, CardHeader } from '@material-tailwind/react';
 
 import API from '@@services';
 import { useForm } from '@@hooks';
-import { EmailField, PasswordField, TextField } from '@@components';
+import { EmailField, FileUploader, PasswordField, TextField } from '@@components';
 
 import { IProfileForm, ProfileFormDefaultValue, ProfileFormSchema } from './index.schema';
 
@@ -21,9 +20,11 @@ export function ProfileCard({ user }: IProfileCardProps) {
 
 	const onSubmitHandler = async (data: IProfileForm) => {
 		try {
-			await API.editProfile(data);
+			const res = await API.editProfile(data);
 
-			router.replace('/home');
+			if (res.data.isOk) {
+				router.replace('/');
+			}
 		} catch (err) {}
 	};
 
@@ -38,12 +39,7 @@ export function ProfileCard({ user }: IProfileCardProps) {
 				shadow={false}
 				className="m-0 grid place-items-center rounded-b-none py-8 px-4 text-center"
 			>
-				<Image
-					alt={`${user.firstName} Avatar`}
-					src={user.avatar || '/default-product.webp'}
-					width={350}
-					height={360}
-				/>
+				<FileUploader />
 			</CardHeader>
 			<CardBody>
 				<form
@@ -52,7 +48,7 @@ export function ProfileCard({ user }: IProfileCardProps) {
 				>
 					<TextField name="firstName" control={control} placeholder="First Name" />
 					<TextField name="lastName" control={control} placeholder="Last Name" />
-					<EmailField disabled name="email" control={control} placeholder="Email" />
+					<EmailField name="email" control={control} placeholder="Email" inputProps={{ disabled: true }} />
 					<PasswordField name="password" control={control} placeholder="Password" />
 					<PasswordField name="repeatPassword" control={control} placeholder="Repeat Password" />
 					<Button type="submit" variant="outlined" color="gray">

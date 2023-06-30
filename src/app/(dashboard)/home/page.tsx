@@ -1,12 +1,12 @@
 import clsx from 'clsx';
 import { Prisma } from '@prisma/client';
-import { cookies } from 'next/headers';
+import { headers } from 'next/headers';
 
 import { ProductCard } from '@@components';
-import { db, getUserFromCookie } from '@@lib';
+import { db, getUserFromHeaders } from '@@lib';
 
 const getData = async () => {
-	const user = await getUserFromCookie(cookies());
+	const user = getUserFromHeaders(headers());
 
 	const where: Prisma.ProductWhereInput = user?.isAdmin ? { authorId: user?.id } : {};
 
@@ -32,10 +32,10 @@ export default async function HomePage() {
 		>
 			{data.products.length ? (
 				<>
-					{data.products.map((product, index) => (
+					{data.products?.map((product, index) => (
 						<ProductCard key={index} product={product} />
 					))}
-					{data.user.isAdmin ? <ProductCard isNew /> : null}
+					{data.user?.isAdmin ? <ProductCard isNew /> : null}
 				</>
 			) : (
 				<h1 className="text-4xl text-black">Not Found Any Product</h1>
