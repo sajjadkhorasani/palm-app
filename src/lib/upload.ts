@@ -1,24 +1,19 @@
 import fs from 'fs';
-import formidable from 'formidable';
-import { NextResponse } from 'next/server';
-import { IncomingMessage } from 'http';
+import { NextRequest, NextResponse } from 'next/server';
 
-export const upload = (req: IncomingMessage, res: NextResponse, next: (init?: any) => NextResponse) => {
-	const form = formidable();
-
-	form.parse(req, (err, fields, files) => {
-		if (err) {
-			next(err);
-			return;
-		}
-
-		console.log('FILE', files);
-	});
+export const upload = async (req: NextRequest, res: NextResponse, next: (init?: any) => NextResponse) => {
+	try {
+		const file = (await req.formData()).get('file') as any;
+		fs.writeFileSync(`./public/${file?.filename}`, file?.toBuffer());
+		return next();
+	} catch (err) {
+		return next(
+			NextResponse.json(
+				{ message: new Error(err as any).message },
+				{
+					status: 401,
+				},
+			),
+		);
+	}
 };
-
-// const saveFile = async (file: File) => {
-// 	const data = fs.readFileSync(file.path);
-// 	fs.writeFileSync(`./public/${file.name}`, data);
-// 	await fs.unlinkSync(file.path);
-// 	return;
-// };

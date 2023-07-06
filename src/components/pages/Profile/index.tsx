@@ -23,7 +23,7 @@ export function ProfileCard({ user }: IProfileCardProps) {
 			const res = await API.editProfile(data);
 
 			if (res.data.isOk) {
-				router.replace('/');
+				router.push('/');
 			}
 		} catch (err) {}
 	};
@@ -39,11 +39,11 @@ export function ProfileCard({ user }: IProfileCardProps) {
 				shadow={false}
 				className="m-0 grid place-items-center rounded-b-none py-8 px-4 text-center"
 			>
-				<FileUploader />
+				<FileUploader alt={`${user.firstName} Avatar`} src={user.avatar} />
 			</CardHeader>
 			<CardBody>
 				<form
-					className="relative flex flex-col justify-start items-stretch mt-12 gap-6"
+					className="relative flex flex-col justify-start items-center mt-12 gap-6"
 					onSubmit={handleSubmit(onSubmitHandler, onInValid)}
 				>
 					<TextField name="firstName" control={control} placeholder="First Name" />

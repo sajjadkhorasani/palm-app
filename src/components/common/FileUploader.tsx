@@ -5,14 +5,14 @@ import { useMemo, useRef, useState } from 'react';
 import { Avatar, Button, Dialog, DialogBody, DialogFooter, DialogHeader, Progress } from '@material-tailwind/react';
 
 import API from '@@services';
-import { useSession } from '@@hooks';
 
 interface IFileUploaderProps {
 	className?: string;
+	alt?: string;
+	src?: string | null;
 }
 
-export const FileUploader = ({ ...props }: IFileUploaderProps) => {
-	const user = useSession();
+export const FileUploader = ({ alt, src, ...props }: IFileUploaderProps) => {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [modal, setModal] = useState<File | null>(null);
 	const [progress, setProgress] = useState<number>(0);
@@ -45,6 +45,9 @@ export const FileUploader = ({ ...props }: IFileUploaderProps) => {
 			const formData = new FormData();
 			formData.append('file', modal);
 			await API.uploadFile(formData, {
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
 				onUploadProgress(event) {
 					setProgress(Math.round((event.loaded * 100) / (event.total as any)));
 				},
@@ -86,14 +89,22 @@ export const FileUploader = ({ ...props }: IFileUploaderProps) => {
 				</Dialog>
 			) : null}
 			<Image
+				priority
 				className="cursor-pointer"
-				alt={`${user?.firstName} Avatar`}
-				src={user?.avatar || '/default-product.webp'}
+				alt={alt || 'default-product.webp'}
+				src={src || '/default-product.webp'}
 				width={350}
 				height={360}
 				onClick={onOpenFile}
 			/>
-			<input ref={inputRef} onChange={onChangeHandler} type="file" accept="image/*" hidden {...inputRef} />
+			<input
+				ref={inputRef}
+				onChange={onChangeHandler}
+				type="file"
+				accept="image/png, image/jpg, image/jpeg"
+				hidden
+				{...inputRef}
+			/>
 		</div>
 	);
 };

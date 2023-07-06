@@ -26,7 +26,7 @@ export function HamburgerMenu() {
 	const onSignOut = async (e: React.MouseEvent) => {
 		e.preventDefault();
 		startTransition(() => signout());
-		router.push('/');
+		router.push('/signin');
 	};
 
 	return (

@@ -8,7 +8,7 @@ import { db, getUserFromHeaders } from '@@lib';
 const getData = async () => {
 	const user = getUserFromHeaders(headers());
 
-	const where: Prisma.ProductWhereInput = user?.isAdmin ? { authorId: user?.id } : {};
+	const where: Prisma.ProductWhereInput = user?.isAdmin ? { deleted: false, authorId: user?.id } : { deleted: false };
 
 	return new Promise<{ products: Prisma.ProductGetPayload<true>[]; user: Prisma.UserGetPayload<true> }>((resolve) => {
 		setTimeout(async () => {

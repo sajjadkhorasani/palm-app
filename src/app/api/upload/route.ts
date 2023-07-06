@@ -1,31 +1,17 @@
-import formidable from 'formidable';
-import { PageConfig } from 'next';
-// import { createEdgeRouter } from 'next-connect';
+import fs from 'fs';
+import { db, getUserFromHeaders } from '@@lib';
 import { NextRequest, NextResponse } from 'next/server';
 
-// import { upload } from '@@lib';
-import path from 'path';
-
-// const router = createEdgeRouter<NextRequest, { params?: unknown }>();
-
-// router.use(async (req, res, next) => {
-
-// });
-
-// router.post((req) => {
-// 	return NextResponse.json({ message: 'File Saved Successfully!' });
-// });
-
 export async function POST(req: NextRequest) {
+	const user = getUserFromHeaders(req.headers);
+
 	try {
-		const form = formidable({
-			keepExtensions: true,
-			uploadDir: path.join(process.cwd(), 'public', 'uploads'),
-		});
-		form.parse(req as any, (err, fields, files) => {
-			console.log(err, fields, files);
-			// return NextResponse.json({ message: 'File Saved Successfully!' });
-		});
+		const data = (await req.formData()).get('file') as Blob;
+		const filename = `${user?.id}.png`;
+		const buffer = Buffer.from(await data.arrayBuffer());
+		fs.writeFileSync(`./public/upload/${filename}`, buffer);
+		await db.user.update({ where: { id: user?.id }, data: { avatar: `/upload/${filename}` } });
+		return NextResponse.json({ message: 'SUCCESS' });
 	} catch (err) {
 		return NextResponse.json(
 			{ message: new Error(err as any).message },
@@ -35,9 +21,3 @@ export async function POST(req: NextRequest) {
 		);
 	}
 }
-
-export const config: PageConfig = {
-	api: {
-		bodyParser: false,
-	},
-};
