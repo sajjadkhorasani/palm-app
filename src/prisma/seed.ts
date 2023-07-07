@@ -1,8 +1,10 @@
 import { randomUUID } from 'crypto';
 import { getRandomNumber } from '@@utils';
-import db, { hashPassword } from '@@lib';
+
+import { db, hashPassword } from '@@lib';
 
 async function main() {
+	console.log('🌱 Seeding the database...');
 	db.$use(async (params, next) => {
 		if (params.model === 'Product') {
 			if (params.action === 'delete') {
@@ -48,7 +50,7 @@ async function main() {
 		},
 	});
 
-	console.log({ user });
+	console.log('👤 User: ', user);
 }
 
 main()

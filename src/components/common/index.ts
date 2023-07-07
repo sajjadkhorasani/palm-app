@@ -1,4 +1,5 @@
 export * from './Avatar';
+export * from './BasketCard';
 export * from './ChooseFile';
 export * from './EmailField';
 export * from './FileUploader';

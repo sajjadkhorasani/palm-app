@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,58 +7,65 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum GENDER_TYPE {
-  MALE
-  FEMALE
-  OTHER
-}
-
 model User {
   id        String      @id @default(uuid())
   firstName String
   lastName  String
   email     String      @unique
   password  String
-  gender    GENDER_TYPE @default(OTHER)
-  avatar    String?
   isAdmin   Boolean     @default(false)
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
-
-  baskets  Basket[]
-  products Product[]
+  avatar    String?
+  gender    GENDER_TYPE @default(OTHER)
+  baskets   Basket[]
+  products  Product[]
 }
 
 model Basket {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  purchasedList Product[]
-
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
+  id            String     @id @default(uuid())
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  userId        String
+  user          User       @relation(fields: [userId], references: [id])
+  purchasedList Purchase[]
 
   @@unique([userId, id])
   @@index([userId, id])
 }
 
 model Product {
-  id          String   @id @default(uuid())
+  id          String     @id @unique @default(uuid())
   name        String
-  description String
   price       Float
   image       String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  deleted     Boolean  @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  deleted     Boolean    @default(false)
+  authorId    String
+  description String
+  author      User       @relation(fields: [authorId], references: [id])
+  Purchase    Purchase[]
 
-  author   User   @relation(fields: [authorId], references: [id])
-  authorId String
+  @@index([authorId])
+}
 
-  basket   Basket? @relation(fields: [basketId], references: [id])
-  basketId String?
+model Purchase {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  productId String
+  basketId  String
+  quantity  Int
+  basket    Basket   @relation(fields: [basketId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
 
-  @@unique([id])
-  @@index([authorId, basketId])
+  @@unique([productId, basketId])
+  @@index([productId, basketId])
+}
+
+enum GENDER_TYPE {
+  MALE
+  FEMALE
+  OTHER
 }

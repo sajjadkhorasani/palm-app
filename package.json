@@ -7,13 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "ts-node -P tsconfig-seed.json -r tsconfig-paths/register --transpileOnly src/prisma/seed.ts"
+    "seed": "prisma db seed"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
     "@hookform/resolvers": "^3.1.1",
     "@material-tailwind/react": "^2.0.4",
-    "@prisma/client": "^4.16.1",
+    "@prisma/client": "^4.16.2",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "clsx": "^1.2.1",
@@ -22,7 +22,6 @@
     "jose": "^4.14.4",
     "next": "13.4.6",
     "next-connect": "^1.0.0",
-    "prisma": "^4.16.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.44.3",
@@ -34,7 +33,7 @@
     "@types/bcrypt": "^5.0.0",
     "@types/formidable": "^2.0.6",
     "@types/multer": "^1.4.7",
-    "@types/node": "20.3.1",
+    "@types/node": "^20.4.0",
     "@types/react": "18.2.12",
     "@types/react-dom": "18.2.5",
     "autoprefixer": "10.4.14",
@@ -42,11 +41,13 @@
     "eslint-config-next": "13.4.6",
     "postcss": "8.4.24",
     "prettier": "2.8.8",
+    "prisma": "^4.16.2",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "5.1.3"
+    "typescript": "^5.1.6"
   },
   "prisma": {
-    "schema": "src/prisma/schema.prisma"
+    "schema": "src/prisma/schema.prisma",
+    "seed": "ts-node -r tsconfig-paths/register --transpile-only src/prisma/seed.ts"
   }
 }

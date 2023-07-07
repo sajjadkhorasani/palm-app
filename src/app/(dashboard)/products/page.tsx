@@ -11,7 +11,7 @@ const getData = async () => {
 	return { user, products };
 };
 
-export default async function HomePage() {
+export default async function ProductsPage() {
 	const data = await getData();
 
 	return (

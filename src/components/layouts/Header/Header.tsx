@@ -1,17 +1,17 @@
 'use client';
 
-import clsx from 'clsx';
 import Link from 'next/link';
-import { color } from '@material-tailwind/react/types/components/button';
 import { usePathname } from 'next/navigation';
 import { Badge, IconButton, Navbar } from '@material-tailwind/react';
-import { BuildingStorefrontIcon, HomeIcon, ShoppingCartIcon } from '@heroicons/react/24/outline';
+import { BuildingStorefrontIcon, HomeIcon, ListBulletIcon, ShoppingCartIcon } from '@heroicons/react/24/outline';
 
 import { useBasketSlice } from '@@store';
 
 import { HamburgerMenu } from './HamburgerMenu';
+import { useSession } from '@@hooks';
 
 export function MainHeader() {
+	const user = useSession();
 	const pathname = usePathname();
 	const { items } = useBasketSlice();
 
@@ -37,9 +37,16 @@ export function MainHeader() {
 						</IconButton>
 					</Badge>
 				</Link>
-				<Link href="/products">
-					<IconButton color={activeColor('/products')} variant="text">
-						<BuildingStorefrontIcon className="w-5 h-5" />
+				{user?.isAdmin ? (
+					<Link href="/products">
+						<IconButton color={activeColor('/products')} variant="text">
+							<BuildingStorefrontIcon className="w-5 h-5" />
+						</IconButton>
+					</Link>
+				) : null}
+				<Link href="/purchased">
+					<IconButton color={activeColor('/purchased')} variant="text">
+						<ListBulletIcon className="w-5 h-5" />
 					</IconButton>
 				</Link>
 				<HamburgerMenu />
