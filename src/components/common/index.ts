@@ -6,5 +6,6 @@ export * from './Link';
 export * from './NumberBox';
 export * from './PasswordField';
 export * from './ProductCard';
+export * from './ShoppingCard';
 export * from './TextField';
 export * from './Typography';

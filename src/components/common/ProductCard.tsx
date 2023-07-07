@@ -31,12 +31,12 @@ export const ProductCard = ({ product, isNew }: IProductCardProps) => {
 
 	const onAddHandler = (e: React.MouseEvent) => {
 		e.preventDefault();
-		router.push('/product/add-new');
+		router.push('/products/add-new');
 	};
 
 	const onEditHandler = (e: React.MouseEvent) => {
 		e.preventDefault();
-		router.push(`/product/${product?.id}`);
+		router.push(`/products/${product?.id}`);
 	};
 
 	const onDeleteHandler = async (e: React.MouseEvent) => {

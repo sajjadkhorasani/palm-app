@@ -1,9 +1,9 @@
 'use client';
 
 import clsx from 'clsx';
-import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
+import { useState, useTransition } from 'react';
 import { PowerIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import { Button, Menu, MenuHandler, MenuItem, MenuList, Typography } from '@material-tailwind/react';
 
@@ -35,7 +35,7 @@ export function HamburgerMenu() {
 				<Button
 					variant="text"
 					color="blue-gray"
-					className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
+					className="flex items-center gap-1 rounded-full py-0.5 px-2 lg:ml-auto"
 				>
 					<Typography className="me-2 normal-case " variant="small">
 						{user?.firstName} {user?.lastName}
