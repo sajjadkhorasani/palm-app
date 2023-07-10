@@ -1,2 +1,7 @@
-export { ReactComponent as MaleAvatar } from './maleAvatar.svg';
-export { ReactComponent as FemaleAvatar } from './maleAvatar.svg';
+import MaleAvatar from './maleAvatar.svg';
+import FemaleAvatar from './maleAvatar.svg';
+
+export {
+    MaleAvatar,
+    FemaleAvatar
+}
