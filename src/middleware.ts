@@ -32,7 +32,7 @@ export async function middleware(req: NextRequest) {
 	}
 
 	try {
-		const payload = await fetch(`${process.env.HOSTNAME}/api/auth`, {
+		const payload = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/auth`, {
 			method: 'POST',
 			body: JSON.stringify({ jwtToken: jwt.value }),
 		});
