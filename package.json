@@ -14,7 +14,7 @@
     "@heroicons/react": "^2.0.18",
     "@hookform/resolvers": "^3.1.1",
     "@material-tailwind/react": "^2.0.4",
-    "@prisma/client": "^4.16.2",
+    "@prisma/client": "^5.0.0",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "clsx": "^1.2.1",
@@ -42,7 +42,7 @@
     "eslint-config-next": "13.4.6",
     "postcss": "8.4.24",
     "prettier": "2.8.8",
-    "prisma": "^4.16.2",
+    "prisma": "^5.0.0",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.1.6"
