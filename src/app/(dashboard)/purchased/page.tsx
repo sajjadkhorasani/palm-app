@@ -16,7 +16,7 @@ export default async function PurchasedPage() {
 				'relative container mx-auto flex flex-col justify-start items-stratch backdrop-blur-lg grow gap-8 px-8 py-10'
 			}
 		>
-			<PurchasedList cart={data?.map((cart) => cart.purchasedList)} />
+			<PurchasedList cart={data?.map((cart) => cart.purchasedList) as any} />
 		</div>
 	);
 }
