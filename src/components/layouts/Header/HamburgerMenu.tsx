@@ -1,22 +1,19 @@
 'use client';
 
 import clsx from 'clsx';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
-import { useState, useTransition } from 'react';
 import { PowerIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import { Button, Menu, MenuHandler, MenuItem, MenuList, Typography } from '@material-tailwind/react';
 
 import { Avatar } from '@@components';
-import { useSession } from '@@hooks';
-
-import { signout } from './actions';
+import { signOut, useSession } from 'next-auth/react';
 
 export function HamburgerMenu() {
-	const user = useSession();
 	const router = useRouter();
+	const { data } = useSession();
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const [isPending, startTransition] = useTransition();
 
 	const onProfile = (e: React.MouseEvent) => {
 		e.preventDefault();
@@ -25,7 +22,7 @@ export function HamburgerMenu() {
 
 	const onSignOut = async (e: React.MouseEvent) => {
 		e.preventDefault();
-		startTransition(() => signout());
+		signOut();
 		router.push('/signin');
 	};
 
@@ -38,7 +35,7 @@ export function HamburgerMenu() {
 					className="flex items-center gap-1 rounded-full py-0.5 px-2 lg:ml-auto"
 				>
 					<Typography className="me-2 normal-case " variant="small">
-						{user?.firstName} {user?.lastName}
+						{data?.user?.name?.replace('-', ' ')}
 					</Typography>
 
 					<Avatar
@@ -46,7 +43,7 @@ export function HamburgerMenu() {
 						variant="circular"
 						size="sm"
 						alt="candice wu"
-						src={user?.avatar}
+						src={data?.user?.image}
 					/>
 					<ChevronDownIcon
 						strokeWidth={2.5}

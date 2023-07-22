@@ -1,11 +1,11 @@
 import clsx from 'clsx';
-import { headers } from 'next/headers';
 
 import { ProductCard } from '@@components';
-import { db, getUserFromHeaders } from '@@lib';
+import { db, getUser } from '@@lib';
+import { isAdmin } from '@@utils/isAdmin';
 
 const getData = async () => {
-	const user = getUserFromHeaders(headers());
+	const user = await getUser();
 	const products = await db.product.findMany({ where: { authorId: user.id, deleted: false } });
 
 	return { user, products };
@@ -24,16 +24,12 @@ export default async function ProductsPage() {
 				},
 			)}
 		>
-			{data.products.length ? (
-				<>
-					{data.products?.map((product, index) => (
-						<ProductCard key={index} product={product} />
-					))}
-					{data.user?.isAdmin ? <ProductCard isNew /> : null}
-				</>
-			) : (
-				<h1 className="text-4xl text-black">Not Found Any Product</h1>
-			)}
+			<>
+				{data.products?.map((product, index) => (
+					<ProductCard key={index} product={product} />
+				))}
+				{isAdmin(data.user) ? <ProductCard isNew /> : null}
+			</>
 		</div>
 	);
 }

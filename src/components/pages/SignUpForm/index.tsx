@@ -1,23 +1,22 @@
 'use client';
 
 import { Button } from '@material-tailwind/react';
-import { useRouter } from 'next/navigation';
 
 import API from '@@services';
 import { useForm } from '@@hooks';
 import { EmailField, PasswordField, TextField } from '@@components';
 
 import { ISignUpForm, SignUpFormDefaultValue, SignUpFormSchema } from './index.schema';
+import { signIn } from 'next-auth/react';
 
 export function SignUpForm() {
-	const router = useRouter();
 	const { control, handleSubmit } = useForm<ISignUpForm>(SignUpFormSchema, SignUpFormDefaultValue);
 
 	const onSubmitHandler = async ({ repeatPassword, ...data }: ISignUpForm) => {
 		try {
 			await API.signUp(data);
 
-			router.replace('/home');
+			signIn(undefined, { callbackUrl: '/' });
 		} catch (err) {}
 	};
 

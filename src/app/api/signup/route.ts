@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { db, generateJWT, hashPassword } from '@@lib';
+import { db, hashPassword } from '@@lib';
 
 export async function POST(request: Request) {
 	const { email, password, ...data } = await request.json();
@@ -10,19 +10,18 @@ export async function POST(request: Request) {
 			data: { isAdmin: email.includes('admin'), password: await hashPassword(password), email, ...data },
 		});
 
-		const token = await generateJWT(user);
-		const res = new NextResponse();
-		res.cookies.set(process.env.COOKIE_NAME as string, token, {
-			httpOnly: true,
-			path: '/',
-			maxAge: 60 * 60 * 24 * 7,
+		return NextResponse.json({
+			user: {
+				id: user.id,
+				email: user.email,
+				name: `${user.firstName}-${user.lastName}`,
+			},
 		});
-		return res;
 	} catch (err) {
 		return NextResponse.json(
 			{ message: new Error(err as any).message },
 			{
-				status: 401,
+				status: 500,
 			},
 		);
 	}

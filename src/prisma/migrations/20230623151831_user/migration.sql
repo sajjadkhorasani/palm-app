@@ -1,6 +1,0 @@
--- CreateEnum
-CREATE TYPE "GENDER_TYPE" AS ENUM ('MALE', 'FEMALE', 'OTHER');
-
--- AlterTable
-ALTER TABLE "User" ADD COLUMN     "avatar" TEXT,
-ADD COLUMN     "gender" "GENDER_TYPE" NOT NULL DEFAULT 'OTHER';

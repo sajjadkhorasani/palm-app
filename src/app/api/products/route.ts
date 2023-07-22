@@ -1,12 +1,12 @@
 import fs from 'fs';
 import path from 'path';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
-import { db, getUserFromHeaders } from '@@lib';
+import { db, getUser } from "@@lib";
 
 export async function POST(req: NextRequest) {
 	const form = await req.formData();
-	const author = getUserFromHeaders(req.headers);
+	const author = await getUser();
 
 	if (!form.get('name') && !form.get('description') && !form.get('price')) {
 		return NextResponse.json({ message: 'Please fill all the fields' }, { status: 401 });
@@ -54,23 +54,6 @@ export async function PUT(req: NextRequest) {
 		});
 
 		return NextResponse.json({ isOk: true, message: 'Product Updated Successfully!' });
-	} catch (err) {
-		return NextResponse.json({ message: new Error(err as any).message }, { status: 401 });
-	}
-}
-
-export async function DELETE(req: NextRequest, context: { params: { productId: string } }) {
-	try {
-		await db.product.update({
-			where: {
-				id: context.params.productId[0],
-			},
-			data: {
-				deleted: true,
-			},
-		});
-
-		return NextResponse.json({ isOk: true, message: 'Product Delete Successfully!' });
 	} catch (err) {
 		return NextResponse.json({ message: new Error(err as any).message }, { status: 401 });
 	}

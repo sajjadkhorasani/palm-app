@@ -8,15 +8,16 @@ import { BuildingStorefrontIcon, HomeIcon, ListBulletIcon, ShoppingCartIcon } fr
 import { useBasketSlice } from '@@store';
 
 import { HamburgerMenu } from './HamburgerMenu';
-import { useSession } from '@@hooks';
+import { useSession } from 'next-auth/react';
 
 export function MainHeader() {
-	const user = useSession();
 	const pathname = usePathname();
+	const { data } = useSession();
 	const { items } = useBasketSlice();
 
 	const activeColor = (path: string) => (pathname === path ? 'blue' : 'gray');
 
+	const isAdmin = data?.user?.email?.includes('admin');
 	return (
 		<Navbar className="mx-auto sticky top-2 p-2 my-4 z-10 lg:rounded-full lg:pl-6">
 			<div className="relative mx-auto flex items-center text-blue-gray-900 gap-2">
@@ -37,7 +38,7 @@ export function MainHeader() {
 						</IconButton>
 					</Badge>
 				</Link>
-				{user?.isAdmin ? (
+				{isAdmin ? (
 					<Link href="/products">
 						<IconButton color={activeColor('/products')} variant="text">
 							<BuildingStorefrontIcon className="w-5 h-5" />

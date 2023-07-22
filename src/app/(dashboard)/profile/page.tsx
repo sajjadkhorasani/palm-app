@@ -1,10 +1,10 @@
-import { headers } from 'next/headers';
-
+import { db, getUser } from '@@lib';
 import { ProfileCard } from '@@components';
-import { getUserFromHeaders } from '@@lib';
 
 const getData = async () => {
-	const user = getUserFromHeaders(headers());
+	const session = await getUser();
+
+	const user = await db.user.findUnique({ where: { id: session.id } });
 
 	return user;
 };

@@ -24,12 +24,8 @@ async function main() {
 		return next(params);
 	});
 
-	const currentId = randomUUID();
-	const user = await db.user.upsert({
-		where: { email: 'admin@mail.com' },
-		update: {},
-		create: {
-			id: currentId,
+	const user = await db.user.create({
+		data: {
 			firstName: 'Admin',
 			lastName: 'Admin LastName',
 			email: 'admin@mail.com',

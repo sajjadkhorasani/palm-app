@@ -1,23 +1,22 @@
 'use client';
 
 import { Button } from '@material-tailwind/react';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
-import API from '@@services';
 import { useForm } from '@@hooks';
 import { EmailField, PasswordField } from '@@components';
 
 import { ISignInForm, SignInFormDefaultValue, SignInFormSchema } from './index.schema';
+import { signIn } from 'next-auth/react';
 
 export function SignInForm() {
-	const router = useRouter();
+	const searchParams = useSearchParams();
+	const callbackUrl = searchParams.get('callbackUrl') || '/home';
 	const { control, handleSubmit } = useForm<ISignInForm>(SignInFormSchema, SignInFormDefaultValue);
 
 	const onSubmitHandler = async (data: ISignInForm) => {
 		try {
-			await API.signIn(data);
-
-			router.replace('/home');
+			await signIn('credentials', { redirect: true, ...data, callbackUrl });
 		} catch (err) {}
 	};
 
@@ -37,4 +36,4 @@ export function SignInForm() {
 			</Button>
 		</form>
 	);
-};
+}

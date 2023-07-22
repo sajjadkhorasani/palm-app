@@ -1,11 +1,10 @@
 import clsx from 'clsx';
-import { headers } from 'next/headers';
 
 import { ShopingList } from '@@components';
-import { db, getUserFromHeaders } from '@@lib';
+import { db, getUser } from '@@lib';
 
 const getData = async () => {
-	const user = getUserFromHeaders(headers());
+	const user = await getUser();
 	const products = await db.product.findMany({ where: { deleted: false } });
 
 	return { user, products };
