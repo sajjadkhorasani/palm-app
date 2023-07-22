@@ -1,9 +1,9 @@
 import fs from 'fs';
-import { db, getUserFromHeaders } from '@@lib';
+import { db, getUser } from '@@lib';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-	const user = getUserFromHeaders(req.headers);
+	const user = await getUser();
 
 	try {
 		const data = (await req.formData()).get('file') as Blob;

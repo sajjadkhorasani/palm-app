@@ -1,11 +1,11 @@
 import { Product } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { db, getUserFromHeaders } from '@@lib';
+import { db, getUser } from '@@lib';
 
 export async function POST(req: NextRequest) {
 	const { list } = await req.json();
-	const user = getUserFromHeaders(req.headers);
+	const user = await getUser();
 
 	try {
 		const newPurchase = await db.basket.create({

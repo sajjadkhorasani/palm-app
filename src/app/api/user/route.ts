@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { db, getUserFromHeaders, hashPassword } from '@@lib';
+import { db, getUser, hashPassword } from '@@lib';
 
 export async function PUT(req: NextRequest) {
 	const { email, password, repeatPassword, ...data } = await req.json();
-	const user = getUserFromHeaders(req.headers);
+	const user = await getUser();
 
 	try {
 		await db.user.update({
