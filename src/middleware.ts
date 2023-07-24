@@ -1,11 +1,8 @@
-import nextAuth from 'next-auth/middleware';
+// import nextAuth from 'next-auth/middleware';
 import { NextResponse } from 'next/server';
 
 export function middleware() {
-	if (process.env.NODE_ENV !== 'development') {
-		return nextAuth;
-	}
-
+	// return nextAuth;
 	return NextResponse.next();
 }
 
