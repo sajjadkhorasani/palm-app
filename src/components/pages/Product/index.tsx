@@ -10,6 +10,7 @@ import { ChooseFile, NumberBox, TextField } from '@@components';
 
 import { IProductForm, ProductFormDefaultValue, ProductFormSchema } from './index.schema';
 import Image from 'next/image';
+import { useUploadThing } from '@@utils';
 
 interface IProductEditableCardProps {
 	isNew?: boolean;
@@ -18,6 +19,7 @@ interface IProductEditableCardProps {
 
 export function ProductEditableCard({ isNew, product }: IProductEditableCardProps) {
 	const router = useRouter();
+	const { startUpload } = useUploadThing('imageUploader');
 	const { control, handleSubmit } = useForm<IProductForm>(
 		ProductFormSchema as any,
 		ProductFormDefaultValue(product) as any,
@@ -25,6 +27,11 @@ export function ProductEditableCard({ isNew, product }: IProductEditableCardProp
 
 	const onSubmitHandler = async (data: IProductForm) => {
 		try {
+			if (isNew && data.image) {
+				const image = await startUpload([data.image as any]);
+				data.image = (image as any)[0].fileUrl;
+			}
+
 			const res = isNew ? await API.addNewProduct(data) : await API.editProduct(data);
 
 			if (res.data.isOk) {

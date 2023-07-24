@@ -1,40 +1,30 @@
-import fs from 'fs';
-import path from 'path';
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
-import { db, getUser } from "@@lib";
+import { db, getUser } from '@@lib';
 
 export async function POST(req: NextRequest) {
-	const form = await req.formData();
+	const data = await req.json();
 	const author = await getUser();
 
-	if (!form.get('name') && !form.get('description') && !form.get('price')) {
-		return NextResponse.json({ message: 'Please fill all the fields' }, { status: 401 });
-	}
-
+	console.log("🚀 ~ POST ~ author:", author)
+	
 	try {
 		const newProduct = await db.product.create({
 			data: {
-				name: form.get('name') as any,
-				description: form.get('description') as any,
-				price: Number(form.get('price')) as any,
+				name: data.name,
+				description: data.description,
+				price: Number(data.price),
+				image: data.image,
 				author: {
 					connect: {
-						id: author?.id,
-					},
+						id: author.id,
+					}
 				},
 			},
 			include: {
 				author: true,
 			},
 		});
-
-		if (form.get('image')) {
-			const image = form.get('image') as Blob;
-			const filename = `${newProduct?.id}.png`;
-			const buffer = Buffer.from(await image.arrayBuffer());
-			fs.writeFileSync(path.join(process.cwd(), 'public', 'upload', filename), buffer);
-		}
 
 		return NextResponse.json({ isOk: true, message: 'Product Created Successfully!', data: newProduct });
 	} catch (err) {
