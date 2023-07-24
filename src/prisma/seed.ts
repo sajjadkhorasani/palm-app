@@ -5,27 +5,13 @@ import { db, hashPassword } from '@@lib';
 
 async function main() {
 	console.log('🌱 Seeding the database...');
-	db.$use(async (params, next) => {
-		if (params.model === 'Product') {
-			if (params.action === 'delete') {
-				params.action = 'update';
-				params.args['data'] = { deleted: true };
-			}
 
-			if (params.action === 'deleteMany') {
-				params.action = 'updateMany';
-				if (params.args.data != undefined) {
-					params.args.data['deleted'] = true;
-				} else {
-					params.args['data'] = { deleted: true };
-				}
-			}
-		}
-		return next(params);
-	});
-
-	const user = await db.user.create({
-		data: {
+	const currentId = randomUUID();
+	const user = await db.user.upsert({
+		where: { email: 'admin@mail.com' },
+		update: {},
+		create: {
+			id: currentId,
 			firstName: 'Admin',
 			lastName: 'Admin LastName',
 			email: 'admin@mail.com',
