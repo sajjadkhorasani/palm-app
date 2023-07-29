@@ -12,7 +12,10 @@ export async function POST(req: NextRequest) {
 			data: {
 				userId: user.id,
 				purchasedList: {
-					connect: list.map((item: Product) => ({ id: item.id })),
+					create: list.map((item: Product & { quantity: number }) => ({
+						productId: item.id,
+						quantity: item.quantity,
+					})),
 				},
 			},
 			include: {

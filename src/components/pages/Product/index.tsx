@@ -58,7 +58,7 @@ export function ProductEditableCard({ isNew, product }: IProductEditableCardProp
 						height={360}
 						className="cursor-pointer"
 						alt={`${product?.name} Image`}
-						src={`/upload/${product?.id}.png` || ''}
+						src={product?.image || ''}
 					/>
 				</CardHeader>
 			) : null}

@@ -30,21 +30,18 @@ export const BasketCard = ({ basketItem, onAddToCart, onRemoveFromCard }: Basket
 	);
 
 	return (
-		<Card className="flex-row w-full self-stretch">
-			<CardHeader
-				shadow={false}
-				floated={false}
-				className="w-[10rem] h-full max-h-[10rem] py-2 shrink-0 m-0 rounded-r-none"
+		<Card className="flex flex-row flex-nowrap w-full justify-start items-stretch self-stretch gap-2">
+			<div
+				className="w-[35rem] flex self-stretch grow m-0"
 			>
 				<Image
+					fill
 					alt="product image"
-					src={basketItem?.image || `/upload/${basketItem?.id}.png` || '/default-product.png'}
-					className="w-full h-full object-scale-down"
-					width="352"
-					height="235"
+					src={basketItem?.image || '/default.png'}
+					className="!relative object-cover object-center rounded-md"
 				/>
-			</CardHeader>
-			<CardBody className="flex flex-col justify-start items-stretch grow gap-2">
+			</div>
+			<CardBody className="flex flex-col justify-start items-stretch grow gap-4">
 				<div className="flex justify-between items-center">
 					<Typography variant="h4" color="blue-gray">
 						{basketItem.name}
@@ -53,11 +50,11 @@ export const BasketCard = ({ basketItem, onAddToCart, onRemoveFromCard }: Basket
 						${basketItem.price.toFixed(2)}
 					</Typography>
 				</div>
-				<Typography color="gray" className="font-normal">
+				<Typography color="gray" className="flex justify-start items-start font-normal grow">
 					{basketItem.description}
 				</Typography>
 				{onAddToCart && onRemoveFromCard ? (
-					<div className="flex flex-row self-center justify-center items-center grow">
+					<div className="flex flex-row self-end justify-center items-center">
 						<Button onClick={onClickHandler}>
 							<PlusIcon className="w-5 h-5" />
 						</Button>

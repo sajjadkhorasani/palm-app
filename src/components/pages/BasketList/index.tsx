@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 
 import API from '@@services';
 import { BasketCard, Typography } from '@@components';
-import { addToBasket, removeFromBasket, useBasketSlice } from '@@store';
+import { addToBasket, clearBasket, removeFromBasket, useBasketSlice } from '@@store';
 import clsx from 'clsx';
 
 export const BasketList = () => {
@@ -17,6 +17,7 @@ export const BasketList = () => {
 		e.preventDefault();
 		try {
 			await API.checkoutBasket(Object.values(items));
+			dispatch(clearBasket(null as any));
 			router.push('/purchased');
 		} catch (error) {}
 	};
@@ -31,24 +32,28 @@ export const BasketList = () => {
 
 	return (
 		<div
-			className={clsx(
-				'relative container mx-auto flex flex-row flex-wrap backdrop-blur-lg grow gap-8 px-8 py-10',
-				{
-					'justify-start items-start': Object.keys(items).length,
-					'justify-center items-center': !Object.keys(items).length,
-				},
-			)}
+			className={clsx('relative container mx-auto flex flex-col grow gap-8 px-8 py-10', {
+				'justify-start items-start': Object.keys(items).length,
+				'justify-center items-center': !Object.keys(items).length,
+			})}
 		>
-			{Object.keys(items).length ? (
-				<>
-					{Object.values(items).map((basketItem, index) => (
+			<div className="flex flex-col justify-start items-stretch grow">
+				{Object.keys(items).length ? (
+					Object.values(items).map((basketItem, index) => (
 						<BasketCard
 							key={index}
 							basketItem={basketItem}
 							onAddToCart={onAddToCart}
 							onRemoveFromCard={onRemoveFromCart}
 						/>
-					))}
+					))
+				) : (
+					<h1 className="text-4xl text-black">Your Basket is Empty</h1>
+				)}
+			</div>
+
+			{Object.keys(items).length ? (
+				<div className='sticky bottom-0 left-0 flex flex-col justify-start items-stretch self-stretch gap-8'>
 					<hr className="w-full border-b border-gray-600" />
 					<div className="flex flex-row justify-between items-center gap-4">
 						<Typography as="h2" variant="h2">
@@ -59,10 +64,8 @@ export const BasketList = () => {
 						</Typography>
 						<Button onClick={onCheckout}>Checkout</Button>
 					</div>
-				</>
-			) : (
-				<h1 className="text-4xl text-black">Your Basket is Empty</h1>
-			)}
+				</div>
+			) : null}
 		</div>
 	);
 };

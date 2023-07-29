@@ -7,5 +7,5 @@ interface IAvatarProps extends Omit<AvatarProps, 'src'> {
 }
 
 export const Avatar = ({ src, ...props }: IAvatarProps) => {
-	return <MUIAvatar src={src || '/default-product.webp'} {...(props as any)} />;
+	return <MUIAvatar src={src || '/default.png'} {...(props as any)} />;
 };

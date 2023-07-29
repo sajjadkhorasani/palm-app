@@ -14,3 +14,10 @@ export const removeFromBasket = (payload: Product) => {
 		payload,
 	};
 };
+
+export const clearBasket = (payload: Product) => {
+	return {
+		type: BasketAction.CLEAR as keyof typeof BasketAction,
+		payload
+	};
+};

@@ -71,7 +71,7 @@ export const ProductCard = ({ product, isNew }: IProductCardProps) => {
 							width={150}
 							height={180}
 							alt={product?.name || ''}
-							src={product?.image || `/upload/${product?.id}.png` || '/default-product.png'}
+							src={product?.image || '/default.png'}
 						/>
 					</CardHeader>
 					<CardBody>

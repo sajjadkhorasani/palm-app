@@ -5,7 +5,10 @@ import clsx from 'clsx';
 const getData = async () => {
 	const user = await getUser();
 
-	return db.basket.findMany({ where: { userId: user.id }, select: { purchasedList: true } });
+	return db.basket.findMany({
+		where: { userId: user.id },
+		select: { purchasedList: { select: { product: true, quantity: true } } },
+	});
 };
 
 export default async function PurchasedPage() {

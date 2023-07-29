@@ -35,7 +35,7 @@ export const ShoppingCard = ({ product, onAddToCart, onRemoveFromCard }: Shoppin
 				<Image
 					width="352"
 					height="235"
-					src={product?.image || `/upload/${product?.id}.png` || '/default-product.png'}
+					src={product?.image || '/default.png'}
 					alt="product image"
 				/>
 			</CardHeader>

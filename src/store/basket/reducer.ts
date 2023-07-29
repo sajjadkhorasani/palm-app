@@ -67,6 +67,12 @@ export const BasketReducer = (
 			};
 		}
 
+		case BasketAction.CLEAR:
+			return {
+				...state,
+				items: {},
+			};
+
 		default:
 			return state;
 	}

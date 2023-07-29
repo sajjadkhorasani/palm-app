@@ -65,7 +65,7 @@ export const ChooseFile = <T extends FieldValues = any>({
 									<Image
 										priority
 										className="cursor-pointer"
-										alt={'default-product.webp'}
+										alt={'default.png'}
 										src={URL.createObjectURL(value)}
 										width={350}
 										height={360}

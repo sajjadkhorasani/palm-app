@@ -91,8 +91,8 @@ export const FileUploader = ({ alt, src, ...props }: IFileUploaderProps) => {
 			<Image
 				priority
 				className="cursor-pointer"
-				alt={alt || 'default-product.webp'}
-				src={src || '/default-product.webp'}
+				alt={alt || 'default.png'}
+				src={src || '/default.png'}
 				width={350}
 				height={360}
 				onClick={onOpenFile}
