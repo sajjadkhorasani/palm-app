@@ -15,7 +15,7 @@ export function SignInForm() {
 	const callbackUrl = searchParams.get('callbackUrl') || '/home';
 	const { control, handleSubmit } = useForm<ISignInForm>(SignInFormSchema, SignInFormDefaultValue);
 
-	const onSubmitHandler = async (data: ISignInForm) => {
+	const onSubmitHandler = async (data: any) => {
 		setLoading(true);
 		try {
 			await signIn('credentials', { redirect: true, ...data, callbackUrl });
