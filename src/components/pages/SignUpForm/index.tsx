@@ -12,7 +12,7 @@ export function SignUpForm() {
 	const { fetch, loading } = useAxios(API.signUp);
 	const { control, handleSubmit } = useForm<ISignUpForm>(SignUpFormSchema, SignUpFormDefaultValue);
 
-	const onSubmitHandler = async ({ repeatPassword, ...data }: ISignUpForm) => {
+	const onSubmitHandler = async ({ repeatPassword, ...data }: any) => {
 		try {
 			await fetch(data);
 
