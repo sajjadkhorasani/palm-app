@@ -2,11 +2,11 @@
 
 import { Prisma } from '@prisma/client';
 import { useRouter } from 'next/navigation';
-import { Button, Card, CardBody, CardHeader } from '@material-tailwind/react';
+import { Card, CardBody, CardHeader } from '@material-tailwind/react';
 
 import API from '@@services';
-import { useForm } from '@@hooks';
-import { EmailField, FileUploader, PasswordField, TextField } from '@@components';
+import { useAxios, useForm } from '@@hooks';
+import { Button, EmailField, FileUploader, PasswordField, TextField } from '@@components';
 
 import { IProfileForm, ProfileFormDefaultValue, ProfileFormSchema } from './index.schema';
 
@@ -16,11 +16,12 @@ interface IProfileCardProps {
 
 export function ProfileCard({ user }: IProfileCardProps) {
 	const router = useRouter();
+	const { fetch, loading } = useAxios(API.editProfile);
 	const { control, handleSubmit } = useForm<IProfileForm>(ProfileFormSchema, ProfileFormDefaultValue(user));
 
 	const onSubmitHandler = async (data: IProfileForm) => {
 		try {
-			const res = await API.editProfile(data);
+			const res = await fetch(data);
 
 			if (res.data.isOk) {
 				router.push('/');
@@ -51,7 +52,7 @@ export function ProfileCard({ user }: IProfileCardProps) {
 					<EmailField name="email" control={control} placeholder="Email" inputProps={{ disabled: true }} />
 					<PasswordField name="password" control={control} placeholder="Password" />
 					<PasswordField name="repeatPassword" control={control} placeholder="Repeat Password" />
-					<Button type="submit" variant="outlined" color="gray">
+					<Button loading={loading} type="submit" variant="outlined" color="gray">
 						Edit Profile
 					</Button>
 				</form>

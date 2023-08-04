@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toastErrors } from './interceptors';
 
 export const AxiosInstance = axios.create({
 	withCredentials: true,
@@ -9,3 +10,5 @@ export const AxiosInstance = axios.create({
 		'Content-Type': 'application/json',
 	},
 });
+
+AxiosInstance.interceptors.request.use(undefined, toastErrors);

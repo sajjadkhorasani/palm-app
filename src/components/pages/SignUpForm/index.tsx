@@ -1,20 +1,20 @@
 'use client';
 
-import { Button } from '@material-tailwind/react';
-
-import API from '@@services';
-import { useForm } from '@@hooks';
-import { EmailField, PasswordField, TextField } from '@@components';
-
-import { ISignUpForm, SignUpFormDefaultValue, SignUpFormSchema } from './index.schema';
 import { signIn } from 'next-auth/react';
 
+import API from '@@services';
+import { useAxios, useForm } from '@@hooks';
+import { Button, EmailField, PasswordField, TextField } from '@@components';
+
+import { ISignUpForm, SignUpFormDefaultValue, SignUpFormSchema } from './index.schema';
+
 export function SignUpForm() {
+	const { fetch, loading } = useAxios(API.signUp);
 	const { control, handleSubmit } = useForm<ISignUpForm>(SignUpFormSchema, SignUpFormDefaultValue);
 
 	const onSubmitHandler = async ({ repeatPassword, ...data }: ISignUpForm) => {
 		try {
-			await API.signUp(data);
+			await fetch(data);
 
 			signIn(undefined, { callbackUrl: '/' });
 		} catch (err) {}
@@ -34,7 +34,7 @@ export function SignUpForm() {
 			<EmailField name="email" control={control} placeholder="Email" />
 			<PasswordField preview name="password" control={control} placeholder="Password" />
 			<PasswordField name="repeatPassword" control={control} placeholder="Repeat Password" />
-			<Button type="submit" variant="outlined" color="gray">
+			<Button loading={loading} type="submit" variant="outlined" color="gray">
 				Sign Up
 			</Button>
 		</form>

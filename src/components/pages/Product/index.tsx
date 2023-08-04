@@ -1,16 +1,16 @@
 'use client';
 
+import Image from 'next/image';
 import { Prisma } from '@prisma/client';
 import { useRouter } from 'next/navigation';
-import { Button, Card, CardBody, CardHeader } from '@material-tailwind/react';
+import { Card, CardBody, CardHeader } from '@material-tailwind/react';
 
 import API from '@@services';
-import { useForm } from '@@hooks';
-import { ChooseFile, NumberBox, TextField } from '@@components';
+import { useUploadThing } from '@@utils';
+import { useAxios, useForm } from '@@hooks';
+import { Button, ChooseFile, NumberBox, TextField } from '@@components';
 
 import { IProductForm, ProductFormDefaultValue, ProductFormSchema } from './index.schema';
-import Image from 'next/image';
-import { useUploadThing } from '@@utils';
 
 interface IProductEditableCardProps {
 	isNew?: boolean;
@@ -19,6 +19,7 @@ interface IProductEditableCardProps {
 
 export function ProductEditableCard({ isNew, product }: IProductEditableCardProps) {
 	const router = useRouter();
+	const { fetch, loading } = useAxios(isNew ? API.addNewProduct : API.editProduct);
 	const { startUpload } = useUploadThing('imageUploader');
 	const { control, handleSubmit } = useForm<IProductForm>(
 		ProductFormSchema as any,
@@ -32,7 +33,7 @@ export function ProductEditableCard({ isNew, product }: IProductEditableCardProp
 				data.image = (image as any)[0].fileUrl;
 			}
 
-			const res = isNew ? await API.addNewProduct(data) : await API.editProduct(data);
+			const res = await fetch(data);
 
 			if (res.data.isOk) {
 				router.push('/');
@@ -71,7 +72,7 @@ export function ProductEditableCard({ isNew, product }: IProductEditableCardProp
 					<TextField name="name" control={control} placeholder="Name" />
 					<TextField name="description" control={control} placeholder="Description" />
 					<NumberBox name="price" control={control} placeholder="Price" />
-					<Button type="submit" variant="outlined" color="gray">
+					<Button loading={loading} type="submit" variant="outlined" color="gray">
 						{!isNew ? 'Edit Product' : 'Add Product'}
 					</Button>
 				</form>

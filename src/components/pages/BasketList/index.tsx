@@ -1,22 +1,23 @@
 'use client';
 
-import { Button } from '@material-tailwind/react';
+import clsx from 'clsx';
 import { Product } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 
 import API from '@@services';
-import { BasketCard, Typography } from '@@components';
+import { useAxios } from '@@hooks';
+import { Button, BasketCard, Typography } from '@@components';
 import { addToBasket, clearBasket, removeFromBasket, useBasketSlice } from '@@store';
-import clsx from 'clsx';
 
 export const BasketList = () => {
 	const router = useRouter();
+	const { fetch, loading } = useAxios(API.checkoutBasket);
 	const { items, dispatch } = useBasketSlice();
 
 	const onCheckout = async (e: React.MouseEvent) => {
 		e.preventDefault();
 		try {
-			await API.checkoutBasket(Object.values(items));
+			await fetch(Object.values(items));
 			dispatch(clearBasket(null as any));
 			router.push('/purchased');
 		} catch (error) {}
@@ -53,7 +54,7 @@ export const BasketList = () => {
 			</div>
 
 			{Object.keys(items).length ? (
-				<div className='sticky bottom-0 left-0 flex flex-col justify-start items-stretch self-stretch gap-8'>
+				<div className="sticky bottom-0 left-0 flex flex-col justify-start items-stretch self-stretch gap-8">
 					<hr className="w-full border-b border-gray-600" />
 					<div className="flex flex-row justify-between items-center gap-4">
 						<Typography as="h2" variant="h2">
@@ -62,7 +63,9 @@ export const BasketList = () => {
 								.reduce((acc, curr) => acc + curr.price * curr.quantity, 0)
 								.toFixed(2)}
 						</Typography>
-						<Button onClick={onCheckout}>Checkout</Button>
+						<Button loading={loading} onClick={onCheckout}>
+							Checkout
+						</Button>
 					</div>
 				</div>
 			) : null}
