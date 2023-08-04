@@ -19,7 +19,7 @@ export function ProfileCard({ user }: IProfileCardProps) {
 	const { fetch, loading } = useAxios(API.editProfile);
 	const { control, handleSubmit } = useForm<IProfileForm>(ProfileFormSchema, ProfileFormDefaultValue(user));
 
-	const onSubmitHandler = async (data: IProfileForm) => {
+	const onSubmitHandler = async (data: any) => {
 		try {
 			const res = await fetch(data);
 
