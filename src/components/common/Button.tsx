@@ -1,11 +1,13 @@
 'use client';
 
 import clsx from 'clsx';
-import { Button as MaterialButton, ButtonProps as MaterialButtonProps, Spinner } from '@material-tailwind/react';
+import { Button as MaterialButton, Spinner } from '@material-tailwind/react';
 
-interface ButtonProps extends Omit<MaterialButtonProps, 'ref'> {
+type MaterialButtonProps = React.ComponentProps<typeof MaterialButton>;
+interface ButtonProps extends Omit<MaterialButtonProps, 'children'> {
 	ref?: React.RefObject<HTMLButtonElement>;
 	loading?: boolean;
+	children?: React.ReactNode;
 }
 
 export const Button = ({ loading, children, ...props }: ButtonProps) => {

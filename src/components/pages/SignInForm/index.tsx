@@ -1,5 +1,6 @@
 'use client';
 
+import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
@@ -7,13 +8,13 @@ import { useForm } from '@@hooks';
 import { Button, EmailField, PasswordField } from '@@components';
 
 import { ISignInForm, SignInFormDefaultValue, SignInFormSchema } from './index.schema';
-import { signIn } from 'next-auth/react';
 
 export function SignInForm() {
 	const searchParams = useSearchParams();
 	const [loading, setLoading] = useState(false);
-	const callbackUrl = searchParams.get('callbackUrl') || '/home';
 	const { control, handleSubmit } = useForm<ISignInForm>(SignInFormSchema, SignInFormDefaultValue);
+
+	const callbackUrl = searchParams.get('callbackUrl') || '/home';
 
 	const onSubmitHandler = async (data: any) => {
 		setLoading(true);
