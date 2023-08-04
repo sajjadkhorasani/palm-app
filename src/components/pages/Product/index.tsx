@@ -26,7 +26,7 @@ export function ProductEditableCard({ isNew, product }: IProductEditableCardProp
 		ProductFormDefaultValue(product) as any,
 	);
 
-	const onSubmitHandler = async (data: IProductForm) => {
+	const onSubmitHandler = async (data: any) => {
 		try {
 			if (isNew && data.image) {
 				const image = await startUpload([data.image as any]);
