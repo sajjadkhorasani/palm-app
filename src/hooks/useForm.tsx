@@ -6,7 +6,7 @@ export function useForm<T extends Maybe<AnyObject>>(schema?: ObjectSchema<T>, de
 	const { formState, ...form } = useRHFForm({
 		// mode: 'all',
 		criteriaMode: 'all',
-		defaultValues,
+		defaultValues: defaultValues as any,
 		reValidateMode: 'onChange',
 		shouldFocusError: true,
 		resolver: schema && yupResolver(schema as any),
