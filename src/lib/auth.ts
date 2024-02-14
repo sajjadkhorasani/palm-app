@@ -30,24 +30,29 @@ export const authOptions: NextAuthOptions = {
 					return null;
 				}
 
-				const user = await db.user.findUnique({
-					where: {
-						email: credentials.email,
-					},
-				});
+				try {
+					const user = await db.user.findUnique({
+						where: {
+							email: credentials.email,
+						},
+					});
 
-				if (!user) {
+					if (!user) {
+						return null;
+					}
+
+					if (await comparePasswords(credentials.password, user.password)) {
+						return {
+							id: user.id,
+							email: user.email,
+							name: `${user.firstName}-${user.lastName}`,
+							image: user.avatar,
+							isAdmin: user.isAdmin,
+						} as any;
+					}
+				} catch (err) {
+					console.log('🚀', err);
 					return null;
-				}
-
-				if (await comparePasswords(credentials.password, user.password)) {
-					return {
-						id: user.id,
-						email: user.email,
-						name: `${user.firstName}-${user.lastName}`,
-						image: user.avatar,
-						isAdmin: user.isAdmin,
-					} as any;
 				}
 			},
 		}),
