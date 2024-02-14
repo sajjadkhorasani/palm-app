@@ -8,7 +8,7 @@ export default function RootTemplate({ children }: { children: React.ReactNode }
 	return (
 		<NextAuthProvider>
 			<ThemeProvider>
-				{children}
+				{children as any}
 				<Toaster />
 			</ThemeProvider>
 		</NextAuthProvider>
