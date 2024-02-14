@@ -54,11 +54,7 @@ export const ChooseFile = <T extends FieldValues = any>({
 						className={clsx('relative flex flex-col justify-start items-stretch gap-2', className)}
 						{...props}
 					>
-						{label ? (
-							<Typography variant="paragraph" htmlFor={name}>
-								{label}
-							</Typography>
-						) : null}
+						{label ? <Typography variant="paragraph">{label}</Typography> : null}
 						<div className="w-[20rem] flex flex-col justify-start items-center gap-4">
 							{value ? (
 								<div className="relative w-[350px]">

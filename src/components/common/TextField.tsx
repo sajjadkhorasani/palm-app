@@ -32,11 +32,7 @@ export const TextField = <T extends FieldValues = any>({
 			rules={rules}
 			render={({ field, fieldState }) => (
 				<div className={clsx('relative flex flex-col justify-start items-stretch gap-2', className)} {...props}>
-					{label ? (
-						<Typography variant="paragraph" htmlFor={name}>
-							{label}
-						</Typography>
-					) : null}
+					{label ? <Typography variant="paragraph">{label}</Typography> : null}
 					<div className="w-[20rem]">
 						<Input
 							id={name}
