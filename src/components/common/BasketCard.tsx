@@ -31,16 +31,17 @@ export const BasketCard = ({ basketItem, onAddToCart, onRemoveFromCard }: Basket
 
 	return (
 		<Card className="flex flex-row flex-nowrap w-full justify-start items-stretch self-stretch gap-2">
-			<div
+			{/* <div
 				className="w-[35rem] flex self-stretch grow m-0"
-			>
-				<Image
-					fill
-					alt="product image"
-					src={basketItem?.image || '/default.png'}
-					className="!relative object-cover object-center rounded-md"
-				/>
-			</div>
+			> */}
+			<Image
+				width={150}
+				height={150}
+				alt="product image"
+				src={basketItem?.image || '/default.png'}
+				className="!relative object-cover object-center rounded-md"
+			/>
+			{/* </div> */}
 			<CardBody className="flex flex-col justify-start items-stretch grow gap-4">
 				<div className="flex justify-between items-center">
 					<Typography variant="h4" color="blue-gray">

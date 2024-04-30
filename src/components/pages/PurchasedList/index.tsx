@@ -15,7 +15,7 @@ export const PurchasedList = ({ cart }: PurchasedListProps) => {
 	const finalCart = cart?.flat();
 
 	return finalCart?.length ? (
-		<div className='flex flex-col justify-start items-stretch grow' >
+		<div className="flex flex-col justify-start items-stretch grow gap-8">
 			{finalCart.map(({ product, quantity }, index) => {
 				return <BasketCard key={index} basketItem={{ ...product, quantity } as any} />;
 			})}
